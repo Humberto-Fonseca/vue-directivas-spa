@@ -1,0 +1,77 @@
+# .github/workflows/deploy.yml
+# GitHub Actions workflow para publicar la SPA en GitHub Pages
+# Se activa automáticamente con cada push a la rama 'main'
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  # Permite lanzar el workflow manualmente desde la pestaña Actions
+  workflow_dispatch:
+
+# Permisos necesarios para que el job pueda publicar en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Evitar ejecuciones paralelas del mismo workflow
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # ─────────────────────────────────────────────────────
+  # Job 1: Construir la app
+  # ─────────────────────────────────────────────────────
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Obtener el código fuente
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      # 2. Configurar Node.js 20 (LTS)
+      - name: Configurar Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # 3. Instalar dependencias de forma reproducible (usa package-lock.json)
+      - name: Instalar dependencias (npm ci)
+        run: npm ci
+
+      # 4. Construir la aplicación (genera la carpeta dist/)
+      - name: Build de la aplicación (npm run build)
+        run: npm run build
+
+      # 5. Configurar GitHub Pages
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v4
+
+      # 6. Subir el artefacto de Pages (la carpeta dist/)
+      - name: Subir artefacto dist/ a GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+
+  # ─────────────────────────────────────────────────────
+  # Job 2: Publicar en GitHub Pages
+  # ─────────────────────────────────────────────────────
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  # Espera a que el job 'build' termine correctamente
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # Publicar el artefacto generado en el job 'build'
+      - name: Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

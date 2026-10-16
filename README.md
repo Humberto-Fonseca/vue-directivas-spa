@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Demo en vivo
+## Demo en vivo
 
 **URL:** https://Humberto-Fonseca.github.io/vue-directivas-spa/
 
@@ -21,64 +21,6 @@
 | `/#/v-show` | Visibilidad | `v-show` |
 | `/#/v-for` | Bucle | `v-for` |
 | `/#/v-bind-key` | Clave | `v-bind:key` / `:key` |
-
----
-
-## 🛠️ Tecnologías
-
-| Tecnología | Versión | Uso |
-|-----------|---------|-----|
-| [Vue 3](https://vuejs.org/) | 3.x | Framework reactivo |
-| [Vue Router 4](https://router.vuejs.org/) | 4.x | Navegación SPA (hash mode) |
-| [Vite](https://vitejs.dev/) | 6.x | Bundler y servidor de desarrollo |
-| Vanilla CSS | — | Estilos sin librerías externas |
-| GitHub Actions | — | CI/CD y despliegue automático |
-
----
-
-## ▶️ Cómo correrlo localmente
-
-### Prerrequisitos
-- Node.js **≥ 18** (recomendado 20 LTS)
-- npm **≥ 9**
-
-### Pasos
-
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/Humberto-Fonseca/vue-directivas-spa.git
-cd vue-directivas-spa
-
-# 2. Instalar dependencias
-npm install
-
-# 3. Iniciar el servidor de desarrollo
-npm run dev
-```
-
-Abre en el navegador: **http://localhost:5173/vue-directivas-spa/**
-
-### Build de producción
-
-```bash
-# Genera la carpeta dist/ lista para desplegar
-npm run build
-
-# Preview local del build de producción
-npm run preview
-```
-
----
-
-## 🌐 Despliegue en GitHub Pages
-
-El despliegue es **automático** con cada push a `main` gracias al workflow de GitHub Actions (`.github/workflows/deploy.yml`).
-
-### Activación manual (solo la primera vez)
-
-1. Ve a **Settings** del repositorio en GitHub
-2. Sección **Pages** → **Source**: selecciona **GitHub Actions**
-3. Haz un push a `main` — el workflow se ejecutará automáticamente
 
 ---
 
